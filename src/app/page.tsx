@@ -72,7 +72,7 @@ export default function HomePage() {
           {/* Floating avatar */}
           <div className="hero-avatar-floating">
             <img
-              src="/avatar/me.jpg"
+              src="/avatar/me1.jpg"
               alt="Bhakthi Salimath"
               className="hero-avatar-floating-img"
             />

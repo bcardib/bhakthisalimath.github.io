@@ -87,10 +87,17 @@ export const homeCopy: {
       {
         school: "The University of Sydney",
         degree: "Bachelor of Advanced Computing (Computer Science)",
-        period: "2024 – Present",
+        period: "Feb 2024 – Nov 2026",
         details:
           "Coursework includes data structures and algorithms, object-oriented programming, software engineering, and algorithm design.",
         status: "current",
+      },
+      {
+        school: "University of Technology Sydney",
+        degree: "Bachelor of Computer Science",
+        period: "Feb 2023 – Nov 2023",
+        details: "Additional coursework and academic foundation.",
+        status: "past",
       },
     ],
   },
