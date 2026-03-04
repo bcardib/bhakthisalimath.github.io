@@ -49,7 +49,7 @@ export const homeCopy: {
     socials: [
       {
         label: "GitHub",
-        href: "https://github.com/bcardib",
+        href: "https://github.com/bhakthisalimath",
         icon: "/icons/github.svg",
       },
       {

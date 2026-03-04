@@ -164,7 +164,7 @@ The live site will be at `https://bhakthisalimath.github.io` (or your custom dom
 **Bhakthi Salimath**  
 Bachelor of Advanced Computing (Computer Science), University of Sydney (expected 2026)
 
-- **GitHub:** [bcardib](https://github.com/bcardib)
+- **GitHub:** [bhakthisalimath](https://github.com/bhakthisalimath)
 - **LinkedIn:** [bhakthisalimath](https://www.linkedin.com/in/bhakthisalimath/)
 - **Email:** bhakthisalimath@gmail.com
 
