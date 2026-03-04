@@ -1,0 +1,32 @@
+{
+  "name": "bhakthisalimath.github.io",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/postprocessing": "^3.0.4",
+    "@whatisjery/react-fluid-distortion": "^1.6.1",
+    "@react-three/fiber": "^9.4.2",
+    "next": "^16.0.10",
+    "postprocessing": "^6.38.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "three": "^0.181.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

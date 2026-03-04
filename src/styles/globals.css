@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@import "./pages/main.css";
+@import "./pages/about.css";
+@import "./pages/projects/projects.css";
+@import "./pages/projects/projectsScatter.css";
+@import "./pages/projects/projectsTimeline.css";
+@import "./pages/contact.css";
+@import "./pages/home.css";
+
+@import "./components/navbar.css";
+@import "./components/projectCard.css";
+
+/* ========== Theme: Light blue + greyscale (top-tier portfolio) ========== */
+
+/* ========== Theme: Light blue + greyscale (top-tier portfolio) ========== */
+/* Dark is default; light overrides when [data-theme="light"] */
+
+:root,
+[data-theme="dark"] {
+  --bg: #0c0f14;
+  --bg-elevated: #13171d;
+  --surface: #161b22;
+  --surface-hover: #1c2129;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-subtle: #6e7681;
+  --accent: #58a6ff;
+  --accent-soft: rgba(88, 166, 255, 0.15);
+  --accent-muted: #388bfd;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --glow: rgba(88, 166, 255, 0.2);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --hero-gradient-start: #0c0f14;
+  --hero-gradient-mid: #0f1419;
+  --hero-gradient-end: #000000;
+  --card-bg: rgba(22, 27, 34, 0.9);
+  --orb-left: rgba(88, 166, 255, 0.22);
+  --orb-right: rgba(88, 166, 255, 0.12);
+}
+
+[data-theme="light"] {
+  --bg: #f0f4f8;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #f6f8fa;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --text-subtle: #9ca3af;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --accent-muted: #3b82f6;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --glow: rgba(37, 99, 235, 0.15);
+  --shadow: rgba(0, 0, 0, 0.12);
+  --hero-gradient-start: #e8eef4;
+  --hero-gradient-mid: #dde5ed;
+  --hero-gradient-end: #f0f4f8;
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --orb-left: rgba(37, 99, 235, 0.18);
+  --orb-right: rgba(59, 130, 246, 0.12);
+}
+
+/* Default (no-js or pre-hydrate) – dark */
+:root {
+  --background: var(--bg, #0c0f14);
+  --foreground: var(--text, #e6edf3);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/* Prevent flash: set theme from localStorage before paint */
+html {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.water-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 40%),
+    radial-gradient(circle at 55% 60%, rgba(88, 166, 255, 0.5), rgba(37, 99, 235, 0.35) 55%, rgba(0, 0, 0, 0) 70%);
+  box-shadow:
+    0 10px 28px var(--glow),
+    0 8px 22px var(--glow);
+  filter: blur(0);
+  opacity: 0.85;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water-cursor {
+    display: none;
+  }
+}

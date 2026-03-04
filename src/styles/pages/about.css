@@ -1,0 +1,27 @@
+@layer components {
+  .about-page {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .about-facts-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .about-page-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .about-page-cta .section-cta {
+    text-decoration: none;
+  }
+}
