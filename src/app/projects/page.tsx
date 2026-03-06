@@ -12,6 +12,7 @@ export default function ProjectsPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [stageReady, setStageReady] = useState(false);
   const [viewMode, setViewMode] = useState<"scatter" | "timeline">("scatter");
+  const [scatterExpanded, setScatterExpanded] = useState(false);
   const detailRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -87,16 +88,37 @@ export default function ProjectsPage() {
           >
             Timeline
           </button>
+          {viewMode === "scatter" && (
+            <button
+              type="button"
+              className={`view-toggle-btn view-toggle-expand ${
+                scatterExpanded ? "is-active" : ""
+              }`}
+              onClick={() => setScatterExpanded((prev) => !prev)}
+              aria-expanded={scatterExpanded}
+              aria-label={scatterExpanded ? "Minimize" : "Expand"}
+            >
+              {scatterExpanded ? "Minimize" : "Expand"}
+            </button>
+          )}
         </div>
 
         {viewMode === "scatter" ? (
-          <ScatterView
-            projects={localizedProjects}
-            selectedId={selectedId}
-            onSelect={handlePick}
-            stageReady={stageReady}
-            fallbackAccent={fallbackAccent}
-          />
+          <div
+            className="scatter-hover-expand"
+            onMouseEnter={() => setScatterExpanded(true)}
+            onTouchStart={() => setScatterExpanded(true)}
+          >
+            <ScatterView
+              projects={localizedProjects}
+              selectedId={selectedId}
+              onSelect={handlePick}
+              stageReady={stageReady}
+              fallbackAccent={fallbackAccent}
+              expanded={scatterExpanded}
+              onExpandChange={setScatterExpanded}
+            />
+          </div>
         ) : (
           <TimelineView
             projects={localizedProjects}

@@ -86,8 +86,13 @@
   .view-toggle {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.75rem;
+  }
+
+  .view-toggle-expand {
+    margin-left: auto;
   }
 
   .view-toggle-btn {

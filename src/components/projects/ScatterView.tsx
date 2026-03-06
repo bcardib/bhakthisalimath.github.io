@@ -9,23 +9,66 @@ import {
 } from "react";
 import type { Project } from "@/data/projects";
 import { useProjectScale } from "./useProjectScale";
+import { useViewportSize } from "./useViewportSize";
 
 type ScatterLayout = { x: number; y: number; rotate: number };
 type DragOffset = { x: number; y: number };
 
-/** Generate scatter positions in a circle so any number of projects get unique, visible spots. */
-function buildScatterLayouts(count: number): ScatterLayout[] {
-  if (count <= 0) return [];
-  const radius = 140 + Math.min(count * 14, 200);
-  const angleStep = (2 * Math.PI) / count;
-  const startAngle = -Math.PI / 2; // start from top
-  return Array.from({ length: count }, (_, i) => {
-    const angle = startAngle + i * angleStep;
-    const x = radius * Math.cos(angle);
-    const y = radius * Math.sin(angle);
-    const rotateDeg = ((angle * 180) / Math.PI - 90) * 0.2;
+const MIN_CELL_WIDTH = 220;
+const MIN_CELL_HEIGHT = 168;
+const STAGE_PADDING = 80;
+const BUFFER_TOP = 28;
+const BUFFER_BOTTOM = 28;
+const CARD_REF_WIDTH = 240;
+const CARD_REF_HEIGHT = 168;
+
+/**
+ * Grid: rows and cols from how many cells fit without overlapping.
+ * Cell size = content / count so grid fits; cards scale down when cell < ref size.
+ */
+function buildScatterLayout(
+  count: number,
+  availableWidth: number,
+  availableHeight: number
+): {
+  layouts: ScatterLayout[];
+  totalWidth: number;
+  totalHeight: number;
+  cardScale: number;
+} {
+  if (count <= 0)
+    return { layouts: [], totalWidth: 0, totalHeight: 0, cardScale: 1 };
+  const contentWidth = Math.max(0, availableWidth - STAGE_PADDING);
+  const contentHeight = Math.max(
+    0,
+    availableHeight - STAGE_PADDING - BUFFER_TOP - BUFFER_BOTTOM
+  );
+  const maxCols = Math.max(1, Math.floor(contentWidth / MIN_CELL_WIDTH));
+  const maxRows = Math.max(1, Math.floor(contentHeight / MIN_CELL_HEIGHT));
+  const minColsForRows = Math.ceil(count / maxRows);
+  const cols = Math.min(maxCols, Math.max(1, minColsForRows));
+  const rows = Math.ceil(count / cols);
+  const cellWidth = contentWidth / cols;
+  const cellHeight = contentHeight / rows;
+  const totalWidth = (cols - 1) * cellWidth;
+  const totalHeight = (rows - 1) * cellHeight;
+  const cardScale = Math.min(
+    1,
+    cellWidth / CARD_REF_WIDTH,
+    cellHeight / CARD_REF_HEIGHT
+  );
+  const startX = -totalWidth / 2;
+  const startY = -totalHeight / 2;
+  const layouts: ScatterLayout[] = Array.from({ length: count }, (_, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const x = startX + col * cellWidth;
+    const y = startY + row * cellHeight;
+    const rotateDeg =
+      (col - (cols - 1) / 2) * 0.6 + (row - (rows - 1) / 2) * 0.2;
     return { x, y, rotate: rotateDeg };
   });
+  return { layouts, totalWidth, totalHeight, cardScale };
 }
 
 /** Generate stack offsets for the closed state so each card is slightly offset. */
@@ -41,6 +84,8 @@ type ScatterViewProps = {
   onSelect: (project: Project) => void;
   stageReady: boolean;
   fallbackAccent: string;
+  expanded: boolean;
+  onExpandChange: (expanded: boolean) => void;
 };
 
 export function ScatterView({
@@ -49,10 +94,12 @@ export function ScatterView({
   onSelect,
   stageReady,
   fallbackAccent,
+  expanded: isUnpacked,
+  onExpandChange,
 }: ScatterViewProps) {
-  const [isUnpacked, setIsUnpacked] = useState(false);
   // Shared responsive scale used by both scatter and timeline views.
   const scatterScale = useProjectScale();
+  const viewport = useViewportSize();
   const [dragOffsets, setDragOffsets] = useState<Record<string, DragOffset>>(
     {}
   );
@@ -72,12 +119,6 @@ export function ScatterView({
   });
   const isDraggingRef = useRef(false);
   const skipClickRef = useRef(false);
-
-  useEffect(() => {
-    // Auto-open after mount for a small reveal.
-    const openTimer = setTimeout(() => setIsUnpacked(true), 180);
-    return () => clearTimeout(openTimer);
-  }, []);
 
   useEffect(() => {
     // Global mouse handlers for dragging cards across the stage.
@@ -116,9 +157,12 @@ export function ScatterView({
   }, []);
 
   const scatterProjects = useMemo(() => projects, [projects]);
-  const scatterLayouts = useMemo(
-    () => buildScatterLayouts(projects.length),
-    [projects.length]
+  const {
+    layouts: scatterLayouts,
+    cardScale,
+  } = useMemo(
+    () => buildScatterLayout(projects.length, viewport.width, viewport.height),
+    [projects.length, viewport.width, viewport.height]
   );
   const stackOffsets = useMemo(
     () => buildStackOffsets(projects.length),
@@ -130,9 +174,14 @@ export function ScatterView({
       className={`scatter-stage ${stageReady ? "is-ready" : ""} ${
         isUnpacked ? "is-open" : ""
       }`}
-      onMouseEnter={() => setIsUnpacked(true)}
-      onMouseLeave={() => setIsUnpacked(false)}
-      onTouchStart={() => setIsUnpacked(true)}
+      style={
+        isUnpacked
+          ? ({
+              ["--buffer-top" as string]: `${BUFFER_TOP}px`,
+              ["--buffer-bottom" as string]: `${BUFFER_BOTTOM}px`,
+            } as CSSProperties)
+          : undefined
+      }
     >
       <div
         className={`folder-stack ${isUnpacked ? "is-open" : ""}`}
@@ -159,9 +208,11 @@ export function ScatterView({
         const transform = isUnpacked
           ? `translate(calc(-50% + ${
               scatter.x * scatterScale + dragOffset.x
-            }px), calc(-50% + ${
+            }px), calc(var(--grid-top-offset, 0px) + ${
               scatter.y * scatterScale + dragOffset.y
-            }px)) rotate(${scatter.rotate}deg) scale(${scatterScale})`
+            }px)) rotate(${scatter.rotate}deg) scale(${
+              scatterScale * cardScale
+            })`
           : `translate(calc(-50% + ${
               stackOffset * scatterScale
             }px), calc(-50% - ${idx * 3 * scatterScale}px)) rotate(${
@@ -188,7 +239,6 @@ export function ScatterView({
                 baseY: dragOffsets[project.id]?.y ?? 0,
               };
               isDraggingRef.current = false;
-              setIsUnpacked(true);
             }}
             style={
               {
