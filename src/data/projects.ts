@@ -112,6 +112,25 @@ export const projects: Project[] = [
     mediaType: "image",
     mediaLabel: "Movie rental system",
   },
+  {
+    id: "holiday-planner",
+    name: "HolidayPlanner — Flask & SQLAlchemy",
+    role: "Solo Developer",
+    period: "2024 – 2025",
+    techStack: ["Python 3.10+", "Flask 3", "SQLAlchemy 2", "Jinja2", "Flask-SocketIO", "SQLite"],
+    shortDescription:
+      "Full-stack holiday booking web app with sign up/login, browse and filter packages, cart, checkout, and admin CRUD. Uses Flask, SQLAlchemy, Jinja2 templates, and Flask-SocketIO for real-time updates.",
+    highlights: [
+      "Implemented authentication (sign up, login) with role-based access (user vs admin); browse and filter packages by category, price, and duration.",
+      "Built booking cart with configurable nights, checkout with shipping and payment details, and admin-only create/edit/delete for packages.",
+      "Used SQLite and SQLAlchemy models (User, Package); Flask-SocketIO for real-time support; runs on fixed port (localhost:1204) with venv-based setup.",
+    ],
+    link: "https://github.com/bhakthisalimath/Holiday-booking-system",
+    bookmarkLabel: "HolidayPlanner",
+    accent: "#0d9488",
+    mediaType: "image",
+    mediaLabel: "Holiday booking app",
+  },
 ];
 
 export const projectsCopy: {
@@ -120,5 +139,5 @@ export const projectsCopy: {
 } = {
   title: "Projects",
   intro:
-    "Academic and personal projects in Java, Python, data structures, and OOP—from graphical games and CLI tools to BST-based systems and UML-driven design.",
+    "Academic and personal projects in Java, Python, data structures, and OOP—from graphical games and CLI tools to BST-based systems, UML-driven design, and full-stack web apps.",
 };

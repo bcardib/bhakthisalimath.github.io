@@ -13,16 +13,27 @@ import { useProjectScale } from "./useProjectScale";
 type ScatterLayout = { x: number; y: number; rotate: number };
 type DragOffset = { x: number; y: number };
 
-// Predefined scatter positions/rotations to fan cards out when opened.
-const scatterLayouts: ScatterLayout[] = [
-  { x: -180, y: -120, rotate: -8 },
-  { x: -50, y: -20, rotate: -3 },
-  { x: 220, y: -90, rotate: 6 },
-  { x: -150, y: 90, rotate: 5 },
-];
+/** Generate scatter positions in a circle so any number of projects get unique, visible spots. */
+function buildScatterLayouts(count: number): ScatterLayout[] {
+  if (count <= 0) return [];
+  const radius = 140 + Math.min(count * 14, 200);
+  const angleStep = (2 * Math.PI) / count;
+  const startAngle = -Math.PI / 2; // start from top
+  return Array.from({ length: count }, (_, i) => {
+    const angle = startAngle + i * angleStep;
+    const x = radius * Math.cos(angle);
+    const y = radius * Math.sin(angle);
+    const rotateDeg = ((angle * 180) / Math.PI - 90) * 0.2;
+    return { x, y, rotate: rotateDeg };
+  });
+}
 
-// Offsets for the stacked (closed) state.
-const stackOffsets = [-4, -2, 2, 6, -6];
+/** Generate stack offsets for the closed state so each card is slightly offset. */
+function buildStackOffsets(count: number): number[] {
+  return Array.from({ length: count }, (_, i) =>
+    (i % 2 === 0 ? -1 : 1) * (2 + Math.floor(i / 2) * 2)
+  );
+}
 
 type ScatterViewProps = {
   projects: Project[];
@@ -105,6 +116,14 @@ export function ScatterView({
   }, []);
 
   const scatterProjects = useMemo(() => projects, [projects]);
+  const scatterLayouts = useMemo(
+    () => buildScatterLayouts(projects.length),
+    [projects.length]
+  );
+  const stackOffsets = useMemo(
+    () => buildStackOffsets(projects.length),
+    [projects.length]
+  );
 
   return (
     <div
@@ -131,8 +150,8 @@ export function ScatterView({
       </div>
 
       {scatterProjects.map((project, idx) => {
-        const scatter = scatterLayouts[idx % scatterLayouts.length];
-        const stackOffset = stackOffsets[idx % stackOffsets.length];
+        const scatter = scatterLayouts[idx];
+        const stackOffset = stackOffsets[idx];
         const dragOffset = dragOffsets[project.id] ?? { x: 0, y: 0 };
         const staggerDelay = `${idx * 70}ms`;
         const dealOffset = idx % 2 === 0 ? -16 : 16;
