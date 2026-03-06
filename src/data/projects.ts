@@ -56,6 +56,25 @@ export const projects: Project[] = [
     mediaLabel: "Tactical tank game",
   },
   {
+    id: "minesweeper-processing",
+    name: "Minesweeper — Java & Processing",
+    role: "Solo Developer",
+    period: "2024 – 2025",
+    techStack: ["Java 8", "Processing 3.3.7", "Gradle 7.6.4", "OOP", "2D game"],
+    shortDescription:
+      "Graphical Minesweeper with click-to-reveal, right-click flags, adjacent mine counts (1–8), auto-reveal cascade, mine explosion animation, timer, and configurable mine count. Fixed 864×640 window, 27×18 grid.",
+    highlights: [
+      "Implemented full game logic in clean OOP (App, Tile, Mine): reveal, flag, cascade reveal, win/loss detection, and multi-frame explosion animation (mine0–mine9 sprites).",
+      "Used Processing 3.3.7 with Gradle 7.6.4 wrapper and .sdkmanrc for Java 8 to avoid macOS EAWT/QuitHandler issues; optional mine count via --args.",
+      "Documented architecture, troubleshooting, and recruiter notes for INFO1113/COMP9003 at University of Sydney.",
+    ],
+    link: "https://github.com/bhakthisalimath/minesweeper-java-processing",
+    bookmarkLabel: "Minesweeper",
+    accent: "#84cc16",
+    mediaType: "image",
+    mediaLabel: "Minesweeper game board",
+  },
+  {
     id: "student-record-bst",
     name: "Student Record Management System (BST)",
     role: "Solo Developer",
