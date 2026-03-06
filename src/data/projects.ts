@@ -170,6 +170,25 @@ export const projects: Project[] = [
     mediaLabel: "Heuristic search engine",
   },
   {
+    id: "diabetes-risk-prediction",
+    name: "Diabetes Risk Prediction — Pima Dataset",
+    role: "Solo Developer",
+    period: "2024 – 2025",
+    techStack: ["Python 3.9+", "pandas", "scikit-learn", "Logistic Regression", "StandardScaler", "ML pipeline"],
+    shortDescription:
+      "ML pipeline for diabetes risk prediction on the Pima Indians dataset: load CSV, 75/25 stratified train/test split, StandardScaler (fit on train only), logistic regression; reports accuracy, precision/recall/F1, and confusion matrix.",
+    highlights: [
+      "End-to-end pipeline: load data with explicit column names, train_test_split(stratify=y, random_state=42), scale with StandardScaler fit on train only to avoid leakage, LogisticRegression with fixed seed; reproducible runs.",
+      "Evaluation: accuracy (~72%), classification report (precision, recall, F1), confusion matrix; 768 instances, 8 numeric features, binary outcome; requirements.txt and .venv for portable setup.",
+      "Documented for COMP3308 / Machine Learning at University of Sydney; README with versions, quick start, troubleshooting, and dataset references.",
+    ],
+    link: "https://github.com/bhakthisalimath/diabetes-risk-prediction",
+    bookmarkLabel: "Diabetes ML",
+    accent: "#dc2626",
+    mediaType: "image",
+    mediaLabel: "Diabetes risk prediction",
+  },
+  {
     id: "bit-state-manager",
     name: "BitStateManager — Naughty Bits CLI",
     role: "Solo Developer",
