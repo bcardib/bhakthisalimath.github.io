@@ -94,6 +94,25 @@ export const projects: Project[] = [
     mediaLabel: "Inkball puzzle game",
   },
   {
+    id: "2048-processing",
+    name: "2048 — Java & Processing",
+    role: "Solo Developer",
+    period: "2024 – 2025",
+    techStack: ["Java 8", "Processing 3.3.7", "Gradle 7.6+", "OOP", "2D game"],
+    shortDescription:
+      "Graphical 2048 game: slide tiles, merge matching numbers, configurable grid (2×2 to 10×10 via --args), timer, mouse click to place 2/4 in empty cell, R to reset. Value-based tile colours, rounded cells, hover feedback.",
+    highlights: [
+      "Implemented OOP design (App, Board, Cell, Moves, Timer): move/merge logic with rotation-based row handling, spawn after move, game-over when no empty cell and no adjacent equals; EAWT stubs for macOS.",
+      "Build compiles to Java 8 bytecode; Gradle runs game with Java 8 (auto-detect or JAVA8_HOME) so Processing 3 works on macOS; .sdkmanrc optional; configurable grid size via command line.",
+      "Polished UI: value-based colours, rounded rects, timer in header and on game over; documented for INFO1113/COMP9003 at University of Sydney.",
+    ],
+    link: "https://github.com/bhakthisalimath/2048-java-processing",
+    bookmarkLabel: "2048",
+    accent: "#eab308",
+    mediaType: "image",
+    mediaLabel: "2048 game board",
+  },
+  {
     id: "student-record-bst",
     name: "Student Record Management System (BST)",
     role: "Solo Developer",
