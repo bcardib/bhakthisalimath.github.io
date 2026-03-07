@@ -303,6 +303,25 @@ export const projects: Project[] = [
     mediaLabel: "Holiday booking app",
   },
   {
+    id: "bitesavr",
+    name: "BiteSavr — Grocery Price Comparison",
+    role: "Group Project (Contributor)",
+    period: "Jan 2024 – Dec 2025",
+    techStack: ["Angular 17", "TypeScript 5.4", "Python 3.8+", "Flask 2.3+", "Flask-CORS", "REST API", "Full-stack"],
+    shortDescription:
+      "Full-stack web app that compares grocery prices across Aldi, Coles, and Woolworths. Build a basket, see the cheapest option per item and the best single store for your full list, with per-store baskets and missing-item handling.",
+    highlights: [
+      "Angular SPA (TechDivas/) with Flask REST API: POST /api/submit and /api/store_baskets; CORS enabled for local dev (frontend on 4200, backend on 5000).",
+      "Item lookup with quantity-type hints from catalogue; two views—cheapest-per-item and best single store—with expandable per-store baskets (Aldi, Coles, Woolworths) and clear missing-item feedback.",
+      "Backend loads aldiData.json, products_data.json, woolworthsData.json; substring matching and aggregation for basket totals and store comparison; documented versions, quick start, and troubleshooting (WIT Hack / uni project).",
+    ],
+    link: "https://github.com/bhakthisalimath/bitesavr-grocery-price-comparison",
+    bookmarkLabel: "BiteSavr",
+    accent: "#22c55e",
+    mediaType: "image",
+    mediaLabel: "BiteSavr grocery comparison",
+  },
+  {
     id: "vsas",
     name: "Virtual Scroll Access System (VSAS)",
     role: "Group Project (Contributor)",
